@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
+from win10toast import ToastNotifier
 
 def job_posts():
     html_text = requests.get('https://www.brightermonday.co.ke/jobs').text
@@ -28,10 +29,16 @@ def job_posts():
             f.write(f"Job Function:{job_fn}\n")
         print(f'file saved: {index}')
 
+def notif_cation():
+    toast = ToastNotifier()
+    toast.show_toast("Notification", "------Refreshing Complete------", duration=20*60, icon_path=None)
+
 if __name__ == '__main__':
     while True:
         job_posts()
         time_wait = 20
-        print(f'waiting{time_wait}minutes...')
+        print(f'Refreshing in {time_wait} minutes...')
         time.sleep(time_wait * 60)
+        notif_cation()
+
 
